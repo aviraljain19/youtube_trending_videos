@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const videoRoutes = require("./routes/videoRoutes");
+const videoRoutes = require("../routes/videoRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
