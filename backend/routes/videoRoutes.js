@@ -24,7 +24,11 @@ const autoScroll = async (page) => {
 };
 
 const channelInfo = async (channelUrl) => {
-  const browser3 = await puppeteer.launch({ headless: true });
+  const browser3 = await puppeteer.launch({
+    headless: true,
+    executablePath:
+      "C:\\Users\\avira\\.cache\\puppeteer\\chrome\\win64-131.0.6778.108\\chrome-win64\\chrome.exe",
+  });
   const page3 = await browser3.newPage();
   try {
     await page3.goto(channelUrl, { waitUntil: "networkidle2" });
@@ -64,7 +68,11 @@ const channelInfo = async (channelUrl) => {
 
 const videoInfo = async (vidUrl) => {
   const videoUrl = vidUrl;
-  const browser2 = await puppeteer.launch();
+  const browser2 = await puppeteer.launch({
+    headless: true,
+    executablePath:
+      "C:\\Users\\avira\\.cache\\puppeteer\\chrome\\win64-131.0.6778.108\\chrome-win64\\chrome.exe",
+  });
   const page2 = await browser2.newPage();
 
   try {
@@ -115,7 +123,11 @@ const videoInfo = async (vidUrl) => {
 
 const url = "https://www.youtube.com/feed/trending";
 const fetchTrendingVideos = async () => {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    executablePath:
+      "C:\\Users\\avira\\.cache\\puppeteer\\chrome\\win64-131.0.6778.108\\chrome-win64\\chrome.exe",
+  });
   const page = await browser.newPage();
   try {
     await page.goto(url, { waitUntil: "networkidle2" });

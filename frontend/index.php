@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$apiUrl = 'http://localhost:3000/api/videos';
+$apiUrl = 'https://youtube-trending-videos-backend.vercel.app/api/videos';
 
 $options = ['http' => ['ignore_errors' => true]];
 $context = stream_context_create($options);
