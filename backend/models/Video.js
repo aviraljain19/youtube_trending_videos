@@ -6,13 +6,13 @@ const VideoSchema = new mongoose.Schema({
   description: String,
   url: String,
   thumbnails: Object,
-  views: Number,
-  likes: Number,
-  dislikes: Number,
+  views: String,
+  likes: String,
   channelTitle: String,
   channelDescription: String,
   channelThumbnails: Object,
-  channelSubscribers: Number,
+  channelSubscribers: String,
+  channelUrl: String,
 });
 
 module.exports = mongoose.model("Video", VideoSchema);
