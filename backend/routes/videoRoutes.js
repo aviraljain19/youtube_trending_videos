@@ -1,33 +1,17 @@
 require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
-const puppeteer = require("puppeteer");
 const Video = require("../models/Video");
 const router = express.Router();
-
-const autoScroll = async (page) => {
-  await page.evaluate(async () => {
-    await new Promise((resolve) => {
-      let totalHeight = 0;
-      const distance = 100;
-      const timer = setInterval(() => {
-        window.scrollBy(0, distance);
-        totalHeight += distance;
-
-        if (totalHeight >= document.body.scrollHeight) {
-          clearInterval(timer);
-          resolve();
-        }
-      }, 100);
-    });
-  });
-};
+const chromium = require('chrome-aws-lambda');
+const puppeteer = require('puppeteer-core');
 
 const channelInfo = async (channelUrl) => {
   const browser3 = await puppeteer.launch({
-    headless: true,
-    executablePath:
-      "C:\\Users\\avira\\.cache\\puppeteer\\chrome\\win64-131.0.6778.108\\chrome-win64\\chrome.exe",
+    args: chromium.args,
+            defaultViewport: chromium.defaultViewport,
+            executablePath: await chromium.executablePath, // Provides the path to Chromium binary
+            headless: chromium.headless,
   });
   const page3 = await browser3.newPage();
   try {
@@ -69,9 +53,10 @@ const channelInfo = async (channelUrl) => {
 const videoInfo = async (vidUrl) => {
   const videoUrl = vidUrl;
   const browser2 = await puppeteer.launch({
-    headless: true,
-    executablePath:
-      "C:\\Users\\avira\\.cache\\puppeteer\\chrome\\win64-131.0.6778.108\\chrome-win64\\chrome.exe",
+    args: chromium.args,
+            defaultViewport: chromium.defaultViewport,
+            executablePath: await chromium.executablePath, // Provides the path to Chromium binary
+            headless: chromium.headless,
   });
   const page2 = await browser2.newPage();
 
@@ -124,9 +109,10 @@ const videoInfo = async (vidUrl) => {
 const url = "https://www.youtube.com/feed/trending";
 const fetchTrendingVideos = async () => {
   const browser = await puppeteer.launch({
-    headless: true,
-    executablePath:
-      "C:\\Users\\avira\\.cache\\puppeteer\\chrome\\win64-131.0.6778.108\\chrome-win64\\chrome.exe",
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath, // Provides the path to Chromium binary
+    headless: chromium.headless,
   });
   const page = await browser.newPage();
   try {
