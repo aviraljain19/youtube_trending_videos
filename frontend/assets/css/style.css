@@ -1,6 +1,8 @@
 body {
   font-family: Arial, sans-serif;
-  margin: 20px;
+  margin: 0px;
+  padding: 0px;
+  background: #000000;
 }
 
 h1 {
@@ -10,19 +12,33 @@ h1 {
 .videos {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  background-color: black;
 }
 
 .video {
+  font-family: sans-serif;
+  color: rgb(226, 226, 226);
   margin: 10px;
   text-align: center;
   width: 30%;
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 10px;
+  border-radius: 20px;
+  padding: 8px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease-in-out;
+  background: linear-gradient(to left, #0000006c, #212121);
+  border: 2px solid #585858;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.video:hover {
+  border-color: #a0a0a0;
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
+  cursor: pointer;
 }
 
 .video img {
   width: 90%;
-  height: 120px;
-  border-radius: 8px;
+  border-radius: 20px;
 }
