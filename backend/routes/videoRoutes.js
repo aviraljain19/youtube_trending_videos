@@ -80,7 +80,7 @@ const videoInfo = async (vidUrl) => {
         videoInformation?.querySelector("span.view-count") ||
         document.querySelector("span.ytd-video-view-count-renderer");
       const views = viewsElement?.innerText || "N/A";
-      var description;
+      var description = "";
       const descriptionLinesEl = videoInformation.querySelector(
         'span[class="yt-core-attributed-string yt-core-attributed-string--white-space-pre-wrap"]'
       );
@@ -161,7 +161,10 @@ router.get("/fetch", async (req, res) => {
     for (const video of trendingVideos) {
       await Video.findOneAndUpdate(
         { videoId: video.videoId },
-        { ...video },
+        {
+          ...video,
+          fetchedAt: `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()},${new Date().getHours()}:${new Date().getMinutes()}`,
+        },
         { upsert: true, new: true }
       );
     }
@@ -173,8 +176,23 @@ router.get("/fetch", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const videos = await Video.find();
-  res.json(videos);
+  try {
+    const latestFetch = await Video.findOne()
+      .sort({ fetchedAt: -1 })
+      .select("fetchedAt");
+    console.log(latestFetch);
+
+    if (!latestFetch) {
+      return res.status(200).json({ videos: [] });
+    }
+    const videos = await Video.find({ fetchedAt: latestFetch.fetchedAt });
+    console.log(videos);
+
+    res.json(videos);
+  } catch (error) {
+    console.error("Error fetching latest videos:", error);
+    res.status(500).json({ error: "Failed to fetch latest videos" });
+  }
 });
 
 router.get("/:id", async (req, res) => {

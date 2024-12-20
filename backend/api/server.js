@@ -10,6 +10,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+let currentTime = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()},${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`;
+console.log(currentTime);
+
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("MongoDB connected"))

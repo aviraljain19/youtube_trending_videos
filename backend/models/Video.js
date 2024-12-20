@@ -13,6 +13,7 @@ const VideoSchema = new mongoose.Schema({
   channelThumbnails: Object,
   channelSubscribers: String,
   channelUrl: String,
+  fetchedAt: String,
 });
 
 module.exports = mongoose.model("Video", VideoSchema);

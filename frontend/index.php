@@ -1,30 +1,16 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$apiUrl = 'https://youtube-trending-videos-backend.vercel.app/api/videos';
-
-$options = ['http' => ['ignore_errors' => true]];
-$context = stream_context_create($options);
-$data = file_get_contents($apiUrl, false, $context);
-
-$httpCode = $http_response_header[0] ?? '';
-if (!str_contains($httpCode, '200')) {
-    die("Error: Failed to fetch data. API returned: $httpCode");
+function file_get_contents_curl($url) {
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+curl_setopt($ch, CURLOPT_URL, $url);
+$data = curl_exec($ch);
+curl_close($ch);
+return $data;
 }
-
-if ($data === false || empty($data)) {
-    die('Error: No data returned from the API.');
-}
-
+$apiUrl = "http://localhost:3000/api/videos/";
+$data = file_get_contents($apiUrl);
 $videos = json_decode($data, true);
-if (json_last_error() !== JSON_ERROR_NONE) {
-    die('Error: Failed to decode JSON. ' . json_last_error_msg());
-}
-
-if (!is_array($videos)) {
-    die('Error: API response is not an array.');
-}
 ?>
 
 <!DOCTYPE html>
@@ -40,14 +26,14 @@ if (!is_array($videos)) {
     <header>
         <div class="logo">
            <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo">
-           <span>Trending</span>
+           <span>YouTube</span>
        </div>
   </header>
   <div class="btn">
   <button onclick="window.location.href='fetch.php'">Fetch Latest Videos</button>
 
   </div>
-
+    <span style="color:white; margin: 23px; font-size: 35px; font-weight:bold;">Trending🔥</span>
     <div class="videos" style="display: flex;">
         <?php foreach ($videos as $video): ?>
             <div class="video" style="margin: 10px;">
