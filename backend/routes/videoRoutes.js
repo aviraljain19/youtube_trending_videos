@@ -4,15 +4,24 @@ const axios = require("axios");
 const Video = require("../models/Video");
 const router = express.Router();
 const chromium = require("@sparticuz/chromium");
-const puppeteer = require("puppeteer-core");
+const puppeteer = require("puppeteer");
 
+const launchBrowser = async () => {
+  try {
+    const browser = await puppeteer.launch({
+      // executablePath: await chromium.executablePath(), // This should handle the path for cloud environments
+      // args: chromium.args, // Cloud-friendly Chromium args
+      // headless: chromium.headless, // Set the headless mode
+      headless: true,
+    });
+    return browser;
+  } catch (error) {
+    console.error("Error launching browser:", error);
+    throw new Error("Failed to launch browser");
+  }
+};
 const channelInfo = async (channelUrl) => {
-  const browser3 = await puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
-    headless: chromium.headless,
-  });
+  const browser3 = await launchBrowser();
   const page3 = await browser3.newPage();
   try {
     await page3.goto(channelUrl, { waitUntil: "networkidle2" });
@@ -52,12 +61,7 @@ const channelInfo = async (channelUrl) => {
 
 const videoInfo = async (vidUrl) => {
   const videoUrl = vidUrl;
-  const browser2 = await puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
-    headless: chromium.headless,
-  });
+  const browser2 = await launchBrowser();
   const page2 = await browser2.newPage();
 
   try {
@@ -108,12 +112,7 @@ const videoInfo = async (vidUrl) => {
 
 const url = "https://www.youtube.com/feed/trending";
 const fetchTrendingVideos = async () => {
-  const browser = await puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
-    headless: chromium.headless,
-  });
+  const browser = await launchBrowser();
   const page = await browser.newPage();
   try {
     await page.goto(url, { waitUntil: "networkidle2" });

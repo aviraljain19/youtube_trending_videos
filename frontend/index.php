@@ -36,13 +36,20 @@ if (!is_array($videos)) {
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <h1 style="text-align:center;">YouTube Trending Videos</h1>
 
-    <button onclick="window.location.href='fetch.php'">Fetch Latest Videos</button>
+    <header>
+        <div class="logo">
+           <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo">
+           <span>Trending</span>
+       </div>
+  </header>
+  <div class="btn">
+  <button onclick="window.location.href='fetch.php'">Fetch Latest Videos</button>
+
+  </div>
 
     <div class="videos" style="display: flex;">
         <?php foreach ($videos as $video): ?>
-
             <div class="video" style="margin: 10px;">
                 <a href="details.php?id=<?= htmlspecialchars($video['videoId']) ?>" >
                     <img src="<?= htmlspecialchars($video['thumbnails']) ?>" 
