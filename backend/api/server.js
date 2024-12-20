@@ -13,7 +13,7 @@ app.use(express.json());
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error(err));
+  .catch((err) => console.error("saddasdasdasd" + err));
 
 app.use("/api/videos", videoRoutes);
 
