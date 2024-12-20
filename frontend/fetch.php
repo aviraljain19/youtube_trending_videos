@@ -1,4 +1,5 @@
 <?php
+set_time_limit(60);
 function file_get_contents_curl($url) {
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_HEADER, 0);
