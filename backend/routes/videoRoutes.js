@@ -9,10 +9,16 @@ const puppeteer = require("puppeteer");
 const launchBrowser = async () => {
   try {
     const browser = await puppeteer.launch({
-      // executablePath: await chromium.executablePath(), // This should handle the path for cloud environments
-      // args: chromium.args, // Cloud-friendly Chromium args
-      // headless: chromium.headless, // Set the headless mode
-      headless: true,
+      args: [
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
     });
     return browser;
   } catch (error) {
